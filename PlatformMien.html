@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+    <title>陈江豪</title>
+    <link rel="short icon" href="Resource/icon.png">
+    <link rel="stylesheet" href="ExtermalStyle.css">
+    <script src="ServiceRequest.js"></script>
+
+    <style>
+        article{
+            margin: 20px;
+        }
+        h3{
+            color: red;
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #dddddd;
+        }
+        h4{
+            font-size: 14px;
+        }
+        p{
+            font-size: 14px;
+            text-indent: 2em;
+            line-height: 2em;
+        }
+    </style>
+</head>
+<body>
+<header>
+<span>平台风采</span>
+</header>
+
+
+
+<section class="DS_second_section">
+    <img src="Resource/banner4.png" alt="哥哥请看下您的网络呗!">
+</section>
+
+<article>
+    <h3 id="title"></h3>
+    <h4 id="subTitle"></h4>
+    <p id="info"></p>
+
+
+    <script>
+    var title_tag=document.getElementById("title");
+    var subTitle_tag=document.getElementById("subTitle");
+    var info_tag=document.getElementById("info");
+
+    var obj_text= JSON.parse(localStorage.getItem("platform_json"));
+
+    if(obj_text){
+        var obj = obj_text.data;
+        title_tag.innerHTML=obj.title;
+        subTitle_tag.innerHTML=obj.subTitle;
+        info_tag.innerHTML=obj.info;
+    }else {
+        var xhr = new XMLHttpRequest();
+        xhr.open('get', 'https://mockapi.eolinker.com/2ZhGVxjacb39010e6753bd9c02ee803e6e3bfeab6e8007c/aboutus');
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                //responseText中包含了服务端返回的数据
+                var responseData = JSON.parse(xhr.responseText);
+                var obj = responseData.data;
+
+                window.localStorage.setItem("platform_json", xhr.responseText);
+
+                title_tag.innerHTML=obj.title;
+                subTitle_tag.innerHTML=obj.subTitle;
+                info_tag.innerHTML=obj.info;
+            }
+
+    }
+
+
+    }
+</script>
+</article>
+
+
+
+<footer>
+    <a href="DropletService.html"><img src="Resource/nav10.png" alt=""> <span>小滴服务</span></a>
+    <a href="BusinessProject.html"><img src="Resource/nav20.png" alt=""> <span>企业项目</span></a>
+    <a href="ServiceProcess.html"><img src="Resource/nav30.png" alt=""> <span>服务流程</span></a>
+    <a href=""><img src="Resource/nav41.png" alt=""> <span style="color: red">平台风采</span></a>
+    <a href="MyDropelet.html"><img src="Resource/nav50.png" alt=""> <span>我的小滴</span></a>
+</footer>
+</body>
+</html>
